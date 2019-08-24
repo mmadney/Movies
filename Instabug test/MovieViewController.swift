@@ -19,13 +19,11 @@ class MovieViewController: UIViewController , UINavigationControllerDelegate , U
     @IBOutlet weak var titleTexet: UITextField!
     @IBOutlet weak var overviewTexet: UITextView!
     @IBOutlet weak var date: UITextField!
-    
     @IBAction func Add(_ sender: Any) {
         let movie = Movie(title: titleTexet.text!, overview: overviewTexet.text!, relaseDate: date.text!, movieImage: Uploadimage)
         delegate?.addMovieCell(movie: movie)
         dismiss(animated: true, completion: nil)
     }
-    
     @IBAction func Import(_ sender: Any) {
         let image = UIImagePickerController()
         image.delegate = self
@@ -37,6 +35,7 @@ class MovieViewController: UIViewController , UINavigationControllerDelegate , U
         }
         
     }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
             Uploadimage.image = image
