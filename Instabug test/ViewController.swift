@@ -33,7 +33,8 @@ class ViewController: UIViewController , UITableViewDataSource , UITableViewDele
     let imageurl : String = "https://image.tmdb.org/t/p/w500"
     let dispatchGroup = DispatchGroup()
     var movies : [Movie] = []
-    
+    var myMovies : [Movie] = [] 
+    let sectionName : [String] = ["My Movies" , "All Movies"]
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -46,20 +47,28 @@ class ViewController: UIViewController , UITableViewDataSource , UITableViewDele
 
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return sectionName.count
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "All Movies"
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.text = sectionName[section]
+        return label
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        return movies.count
+        if section == 1 {
+            return movies.count
+        }
+        else
+        {
+            return myMovies.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let movieRow = movies[indexPath.row]
+        //let movieRow = movies[indexPath.row]
+        let movieRow = indexPath.section == 0 ? myMovies[indexPath.row] : movies[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as! MovieCell
         cell.setMovie(movie: movieRow)
         return cell
@@ -88,7 +97,7 @@ class ViewController: UIViewController , UITableViewDataSource , UITableViewDele
     }
     
     func addMovieCell(movie: Movie) {
-        movies.append(movie)
+        myMovies.append(movie)
         TableView.reloadData()
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
