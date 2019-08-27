@@ -15,19 +15,24 @@ class MovieCell: UITableViewCell {
     @IBOutlet weak var MovieOverView: UITextView!
     @IBOutlet weak var MovieTitle: UILabel!
     
-    func setMovie(movie : Movie)
+    func setMovie(movie : importedMovie)
     {
-        if movie.movieImage != "" {
-             MovieImage.image = getImage(imageUrl: movie.movieImage).image
-        }
-        else
-        {
-            MovieImage = movie.uimovieimage
-        }
+        MovieImage = movie.uimovieimage
+        MovieDate.text = movie.relaseDate
+        MovieOverView.text = movie.overview
+        MovieTitle.text = movie.title
+        
+    }
+    
+    func setMovie(movie : apiMovie)
+    {
+        MovieImage.image = getImage(imageUrl: movie.movieImage).image
         MovieDate.text = movie.relaseDate
         MovieOverView.text = movie.overview
         MovieTitle.text = movie.title
     }
+    
+    
     
     func getImage(imageUrl : String) -> UIImageView {
         let url = URL(string: imageUrl)
