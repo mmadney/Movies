@@ -17,7 +17,7 @@ class MovieCell: UITableViewCell {
     
     func setMovie(movie : importedMovie)
     {
-        MovieImage = movie.uimovieimage
+        MovieImage.image = movie.uimovieimage
         MovieDate.text = movie.relaseDate
         MovieOverView.text = movie.overview
         MovieTitle.text = movie.title

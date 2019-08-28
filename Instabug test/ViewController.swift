@@ -32,8 +32,8 @@ class ViewController: UIViewController , UITableViewDataSource , UITableViewDele
     let url : String = "http://api.themoviedb.org/3/discover/movie?api_key=acea91d2bff1c53e6604e4985b6989e2&page=1"
     let imageurl : String = "https://image.tmdb.org/t/p/w500"
     let dispatchGroup = DispatchGroup()
-    var movies : [Movie] = []
-    var myMovies : [Movie] = [] 
+    var movies : [apiMovie] = []
+    var myMovies : [importedMovie] = []
     let sectionName : [String] = ["My Movies" , "All Movies"]
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,9 +68,14 @@ class ViewController: UIViewController , UITableViewDataSource , UITableViewDele
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         //let movieRow = movies[indexPath.row]
-        let movieRow = indexPath.section == 0 ? myMovies[indexPath.row] : movies[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as! MovieCell
-        cell.setMovie(movie: movieRow)
+        if indexPath.section == 0 {
+            cell.setMovie(movie: myMovies[indexPath.row])
+        }
+        else
+        {
+            cell.setMovie(movie: movies[indexPath.row])
+        }
         return cell
         
     }
@@ -85,7 +90,7 @@ class ViewController: UIViewController , UITableViewDataSource , UITableViewDele
                 let moviesdata = try JSONDecoder().decode(jsondata.self, from: data)
                 for result in moviesdata.results {
                     let imagepath = self.imageurl + result.poster_path
-                    let addmovie = Movie(title: result.title, overview: result.overview, relaseDate: result.release_date, movieImage: imagepath )
+                    let addmovie = apiMovie(title: result.title, overview: result.overview, relaseDate: result.release_date, movieImage: imagepath)
                     self.movies.append(addmovie)
                 }
                 self.dispatchGroup.leave()
@@ -96,7 +101,7 @@ class ViewController: UIViewController , UITableViewDataSource , UITableViewDele
         }.resume()
     }
     
-    func addMovieCell(movie: Movie) {
+    func addMovieCell(movie: importedMovie) {
         myMovies.append(movie)
         TableView.reloadData()
     }

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol addMovieDelegate {
-    func addMovieCell(movie : Movie)
+    func addMovieCell(movie : importedMovie)
 }
 class MovieViewController: UIViewController , UINavigationControllerDelegate , UIImagePickerControllerDelegate  {
     
@@ -20,7 +20,7 @@ class MovieViewController: UIViewController , UINavigationControllerDelegate , U
     @IBOutlet weak var overviewTexet: UITextView!
     @IBOutlet weak var date: UITextField!
     @IBAction func Add(_ sender: Any) {
-        let movie = Movie(title: titleTexet.text!, overview: overviewTexet.text!, relaseDate: date.text!, movieImage: Uploadimage)
+        let movie = importedMovie(title: titleTexet.text!, overview: overviewTexet.text!, relaseDate: date.text!, movieImage: Uploadimage.image!)
         delegate?.addMovieCell(movie: movie)
         dismiss(animated: true, completion: nil)
     }

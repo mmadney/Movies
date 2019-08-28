@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 class importedMovie: Movie
 {
-     var uimovieimage : UIImageView? = nil
+     var uimovieimage : UIImage? = nil
     
-    init(title: String ,overview: String,relaseDate: String, movieImage:UIImageView)
+    init(title: String ,overview: String,relaseDate: String, movieImage:UIImage)
     {
         self.uimovieimage = movieImage
         super.init(title: title, overview: overview, relaseDate: relaseDate)
